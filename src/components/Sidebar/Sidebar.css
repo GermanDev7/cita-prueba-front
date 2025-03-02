@@ -1,0 +1,41 @@
+.sidebar {
+    background-color: #2c2c2c; 
+    color: #fff;
+    padding: 20px;
+   
+  }
+  
+  .sidebar__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar__item {
+    margin-bottom: 10px;
+  }
+  
+  .sidebar__link {
+    color: #fff; 
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .sidebar__link:hover {
+    text-decoration: underline;
+  }
+  
+  .sidebar__logout-button {
+    margin-top: 16px;
+    background-color: #ff6b6b;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  
+  .sidebar__logout-button:hover {
+    background-color: #ff3b3b;
+  }
+  

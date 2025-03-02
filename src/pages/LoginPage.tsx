@@ -5,6 +5,7 @@ import { loginSuccess } from '../features/auth/authSlice';
 import { loginAPI, LoginResponse } from '../services/authAPI';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './LoginPage.css'
 
 interface LoginFormInputs {
   email: string;
@@ -45,26 +46,38 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className="login-page">
-      <h2>Iniciar Sesión</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            {...register('email', { required: 'El email es obligatorio' })}
-          />
-          {errors.email && <p>{errors.email.message}</p>}
-        </div>
-        <div>
-          <label>Contraseña:</label>
-          <input
-            type="password"
-            {...register('password', { required: 'La contraseña es obligatoria' })}
-          />
-          {errors.password && <p>{errors.password.message}</p>}
-        </div>
-        <button type="submit">Entrar</button>
-      </form>
+      <div className="login-page__container">
+        <h2 className="login-page__title">Iniciar Sesión</h2>
+        <form className="login-page__form" onSubmit={handleSubmit(onSubmit)}>
+          <div className="login-page__form-group">
+            <label>Email:</label>
+            <input
+              type="email"
+              {...register('email', { required: 'El email es obligatorio' })}
+            />
+            {errors.email && (
+              <p className="login-page__error">{errors.email.message}</p>
+            )}
+          </div>
+
+          <div className="login-page__form-group">
+            <label>Contraseña:</label>
+            <input
+              type="password"
+              {...register('password', {
+                required: 'La contraseña es obligatoria',
+              })}
+            />
+            {errors.password && (
+              <p className="login-page__error">{errors.password.message}</p>
+            )}
+          </div>
+
+          <button type="submit" className="login-page__submit">
+            Entrar
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

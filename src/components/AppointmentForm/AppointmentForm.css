@@ -1,0 +1,32 @@
+.appointment-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+  }
+  
+  .appointment-form__group {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .appointment-form__error {
+    color: #d93025;
+    font-size: 0.9rem;
+    margin-top: 4px;
+  }
+  
+  .appointment-form__submit-button {
+    align-self: flex-start;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  
+  .appointment-form__submit-button:hover {
+    background-color: #45a049;
+  }
+  

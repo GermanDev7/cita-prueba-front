@@ -1,0 +1,30 @@
+.patient-page {
+    background-color: #f7f9fc; 
+    min-height: 100vh;        
+    padding: 40px 20px;      
+    box-sizing: border-box;
+  }
+  
+  .patient-page__title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  
+  
+  .patient-page__loading {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .patient-page__divider {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid #ccc;
+  }
+  
+  .patient-page__subtitle {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+  }
+  
