@@ -4,7 +4,7 @@ import { RootState } from '../app/store';
 import { Navigate } from 'react-router-dom';
 
 interface PrivateRouteProps {
-    requiredRole: 'admin' | 'doctor' | 'user';
+    requiredRole: 'admin' | 'doctor' | 'patient';
     children: React.ReactNode;
 }
 

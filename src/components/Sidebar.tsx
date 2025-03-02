@@ -32,7 +32,7 @@ const Sidebar: React.FC = () => {
                         </li>
                     </>
                 )}
-                {role === 'user' && (
+                {role === 'patient' && (
                     <>
                         <li>
                             <a href="/user/appointments">Mis Citas</a>

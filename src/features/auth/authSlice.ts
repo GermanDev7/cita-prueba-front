@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Userdata } from '../../services/authAPI';
 
 interface AuthState {
     token: string | null;
-    role: 'admin' | 'doctor' | 'user' | null;
-    userData: Record<string, any> | null;
+    role: 'admin' | 'doctor' | 'patient' | null;
+    userData: Partial<Userdata> | null;
 }
 
 const initialState: AuthState = {

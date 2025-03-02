@@ -1,7 +1,14 @@
-import { useState } from 'react'
+//import { useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 import './App.css'
+import PrivateRoute from './routes/PrivateRoute'
+import LoginPage from './pages/LoginPage'
+import DashboardLayout from './components/DashBoardLayout'
+
+import AdminAppointmentsPage from './pages/Admin/AdminAppointmentsPage'
+import DoctorAppointmentsPage from './pages/Doctor/DoctorAppointmentsPage'
+import PatientAppointmentsPage from './pages/Patient/PatientAppointmentsPage'
 
 function App() {
 
@@ -9,7 +16,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Ruta pública: Login */}
+       
         <Route path="/" element={<LoginPage />} />
 
         {/* Rutas protegidas */}
@@ -36,11 +43,11 @@ function App() {
         />
 
         <Route
-          path="/user/*"
+          path="/patient/*"
           element={
-            <PrivateRoute requiredRole="user">
+            <PrivateRoute requiredRole="patient">
               <DashboardLayout>
-                <UserAppointmentsPage />
+                <PatientAppointmentsPage />
               </DashboardLayout>
             </PrivateRoute>
           }
