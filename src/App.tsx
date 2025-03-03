@@ -1,10 +1,12 @@
+// src/App.tsx
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+
 import LoginPage from './pages/LoginPage';
-import PatientAppointmentsPage from './pages/Patient/PatientAppointmentsPage';
-import CreateAppointmentPage from './pages/Patient/CreateAppointmentPage';
 import DashboardLayout from './components/DashboardLayout/DashboardLayout';
 import PrivateRoute from './routes/PrivateRoute';
+import AppointmentList from './components/AppointmentList/AppointmentList';
+import AppointmentForm from './components/AppointmentForm/AppointmentForm';
 
 function App() {
   return (
@@ -12,21 +14,63 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route
-          path="/patient/appointments"
+          path="/patient/*"
           element={
             <PrivateRoute requiredRole="patient">
               <DashboardLayout>
-                <PatientAppointmentsPage />
+                <Routes>
+                  <Route
+                    path="appointments"
+                    element={<AppointmentList role="patient" />}
+                  />
+                  <Route
+                    path="create"
+                    element={<AppointmentForm state='create' />}
+                  />
+                  <Route
+                    path="update"
+                    element={<AppointmentForm state='update' />}
+                  />
+                  <Route path="*" element={<Navigate to="appointments" replace />} />
+                </Routes>
               </DashboardLayout>
             </PrivateRoute>
           }
         />
+
         <Route
-          path="/patient/create"
+          path="/doctor/*"
           element={
-            <PrivateRoute requiredRole="patient">
+            <PrivateRoute requiredRole="doctor">
               <DashboardLayout>
-                <CreateAppointmentPage />
+                <Routes>
+                  <Route
+                    path="appointments"
+                    element={<AppointmentList role="doctor" />}
+                  />
+                  <Route path="*" element={<Navigate to="appointments" replace />} />
+                </Routes>
+              </DashboardLayout>
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/*"
+          element={
+            <PrivateRoute requiredRole="admin">
+              <DashboardLayout>
+                <Routes>
+                  <Route
+                    path="appointments"
+                    element={<AppointmentList role="admin" />}
+                  />
+                  <Route
+                    path="update"
+                    element={<AppointmentForm state='update' />}
+                  />
+                  <Route path="*" element={<Navigate to="appointments" replace />} />
+                </Routes>
               </DashboardLayout>
             </PrivateRoute>
           }

@@ -10,6 +10,7 @@ import useSubmitAppointment from '../../hooks/useSubmitAppointment';
 
 
 
+
 const CreateAppointmentPage: React.FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<CreateFormInputs>();
 
@@ -17,7 +18,7 @@ const CreateAppointmentPage: React.FC = () => {
   const [selectedSpecialty, setSelectedSpecialty] = useState<GenericOptionsSelect>({ label: "", value: "" });
   const [selectedDoctor, setSelectedDoctor] = useState<GenericOptionsSelect>({ label: "", value: "" });
 
-  const {submitAppointment} = useSubmitAppointment();
+  const { submitAppointment } = useSubmitAppointment();
 
   const handleSpecialtyChange = useCallback((option: GenericOptionsSelect) => {
     setSelectedSpecialty(option);
@@ -31,6 +32,7 @@ const CreateAppointmentPage: React.FC = () => {
 
   const onSubmit: SubmitHandler<CreateFormInputs> = (data) => {
     submitAppointment(data, selectedDoctor, selectedSpecialty)
+    console.log(data)
   }
 
   return (
@@ -38,8 +40,6 @@ const CreateAppointmentPage: React.FC = () => {
       <div className="create-appointment-page__container">
         <h1 className="create-appointment-page__title">Crear Nueva Cita</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="create-appointment-page__form">
-
-          {/* Fecha y Hora (fila 1) */}
           <div className="create-appointment-page__group">
             <label>Fecha:</label>
             <input
@@ -60,7 +60,7 @@ const CreateAppointmentPage: React.FC = () => {
           {/* Especialidad y Doctor (fila 2) */}
           <div className="create-appointment-page__group">
             <label>Especialidad:</label>
-            <SpecialtySelect onChange={ handleSpecialtyChange} />
+            <SpecialtySelect onChange={handleSpecialtyChange} />
           </div>
           <div className="create-appointment-page__group">
             <label>Doctor:</label>

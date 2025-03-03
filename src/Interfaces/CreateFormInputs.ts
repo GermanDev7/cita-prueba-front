@@ -4,5 +4,5 @@ export interface CreateFormInputs {
     time: string;
     appointmentType: string;
     doctorId: number;
-    userId: number;
+    userId?: number;
 }

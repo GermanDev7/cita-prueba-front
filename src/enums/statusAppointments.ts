@@ -16,3 +16,9 @@ export enum StatusName {
     Canceled = 'Cancelado',
     Completed = 'Completado'
 }
+
+export enum StatusRole {
+    Patient = 'Patient',
+    Doctor = 'Doctor',
+    Admin = 'Admin'
+}

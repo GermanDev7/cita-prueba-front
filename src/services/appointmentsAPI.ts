@@ -10,6 +10,11 @@ export const getPatientAppointments = async (): Promise<Appointment[]> => {
     return response.data;
 };
 
+export const getAppointmentById = async (id: number): Promise<Appointment> => {
+    const response = await api.get<Appointment>(`/appointments/${id}`);
+    return response.data;
+};
+
 
 export const createAppointment = async (data: CreateAppointmentPayload): Promise<Appointment> => {
     const response = await api.post<Appointment>('/appointments', data);

@@ -20,14 +20,17 @@ const DoctorSelect: React.FC<DoctorSelectProps> = ({ specialty, onChange }) => {
         if (specialty) {
             getDoctorsBySpecialty(specialty)
                 .then((doctors) => {
-                    setDoctorOptions(doctors);
+                    const doctorOptions = doctors.map((doc) => ({
+                        value: doc.doctorId,
+                        label: doc.doctorName,
+                    }));
+                    setDoctorOptions(doctorOptions);
                 })
                 .catch((err) => {
                     console.error('Error al cargar doctores:', err);
                     setDoctorOptions([]);
                 });
         } else {
-            // Si se limpia la especialidad, limpiamos los doctores
             setDoctorOptions([]);
         }
     }, [specialty]);

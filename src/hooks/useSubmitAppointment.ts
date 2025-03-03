@@ -3,14 +3,15 @@ import { createAppointment } from "../services/appointmentsAPI";
 
 const useSubmitAppointment = () => {
 
-    const submitAppointment = async (selectedDoctor, selectedSpecialty, data) => {
-        console.log(selectedDoctor, selectedSpecialty, data)
+    const submitAppointment = async (data, selectedDoctor, selectedSpecialty) => {
+       
         try {
             if (!selectedDoctor) {
                 throw new Error('Debes seleccionar un doctor');
             }
-
+            console.log(data.time)
             const dateTime = new Date(`${data.date}T${data.time}:00`);
+            const adjustedDateTime = new Date(dateTime.getTime() - (5 * 60 * 60 * 1000));
             const userDataStr = localStorage.getItem('userData');
             const userId = userDataStr ? JSON.parse(userDataStr).userId : null;
             if (!userId) {
@@ -19,18 +20,17 @@ const useSubmitAppointment = () => {
 
 
             const payload: CreateAppointmentPayload = {
-                dateTime,
+                dateTime: adjustedDateTime,
                 appointmentType: selectedSpecialty.value,
                 doctorId: parseInt(selectedDoctor.value),
                 userId,
             };
+            console.log("payload", payload);
 
             await createAppointment(payload);
             alert('Cita creada exitosamente');
-            // navigate('/patient/appointments'); // si quieres redirigir
         } catch (error) {
-            console.error('Error al crear la cita:', error);
-            alert('Error al crear la cita');
+            alert(error.response.data.error);
         }
     }
     return { submitAppointment };

@@ -4,14 +4,15 @@ import { Appointment } from '../../Interfaces/Appointment';
 import { StatusAppointment, StatusColor, StatusName } from '../../enums/statusAppointments';
 
 interface AppointmentCardProps {
+  role: string;
   appointment: Appointment;
   onCancel: (id: number) => void;
-  onEdit: (id: number) => void;
+  onEdit: (id: number, role: string) => void;
 }
 
 
 
-const AppointmentCard: React.FC<AppointmentCardProps> = ({ appointment, onCancel, onEdit }) => {
+const AppointmentCard: React.FC<AppointmentCardProps> = ({ appointment, onCancel, onEdit, role }) => {
   const [showModal, setShowModal] = useState(false);
 
   const dateObj = new Date(appointment.dateTime);
@@ -21,8 +22,15 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({ appointment, onCancel
   const [statusColor, setStatusColor] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
+  const onCheck = (id: number) => {
+    console.log(id)
 
+  }
 
+  const onReasign = (id: number) => {
+    console.log(id)
+
+  }
   const handleCancelClick = () => {
     if (appointment.status === 'scheduled') {
       setShowModal(true);
@@ -39,6 +47,9 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({ appointment, onCancel
   const closeModal = () => {
     setShowModal(false);
   };
+
+
+
 
   const checkColorsByStatus = () => {
     switch (appointment.status) {
@@ -83,20 +94,56 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({ appointment, onCancel
         </p>
       </div>
       <div className="appointment-card__actions">
-        <button
-          className="appointment-card__button appointment-card__button--edit"
-          onClick={() => onEdit(appointment.appointmentId)}
-          disabled={buttonDisabled}
-        >
-          Editar
-        </button>
-        <button
-          className="appointment-card__button appointment-card__button--cancel"
-          onClick={handleCancelClick}
-          disabled={buttonDisabled}
-        >
-          Cancelar
-        </button>
+        {(role === 'patient') ? (
+          <>
+            <button
+              className="appointment-card__button appointment-card__button--edit"
+              onClick={() => onEdit(appointment.appointmentId, role)}
+              disabled={buttonDisabled}
+            >
+              Editar
+            </button>
+            <button
+              className="appointment-card__button appointment-card__button--cancel"
+              onClick={handleCancelClick}
+              disabled={buttonDisabled}
+            >
+              Cancelar
+            </button>
+          </>
+        ) : role === 'admin' ? (
+          <>
+            <button
+              className="appointment-card__button appointment-card__button--edit"
+              onClick={() => onReasign(appointment.appointmentId)}
+              disabled={buttonDisabled}
+            >
+              Reasignar
+            </button>
+            <button
+              className="appointment-card__button appointment-card__button--cancel"
+              onClick={handleCancelClick}
+              disabled={buttonDisabled}
+            >
+              Cancelar
+            </button>
+          </>
+
+
+
+        )
+          : role === 'doctor' ? (
+            <button
+              className="appointment-card__button appointment-card__button--check"
+              onClick={() => onCheck(appointment.appointmentId)}
+              disabled={buttonDisabled}
+            >
+              Completar
+            </button>
+          ) :
+            (<>
+            </>)}
+
       </div>
 
       {showModal && (
