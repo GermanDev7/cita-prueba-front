@@ -28,7 +28,7 @@ const useSubmitAppointment = () => {
             console.log("payload", payload);
 
             await createAppointment(payload);
-            alert('Cita creada exitosamente');
+            
         } catch (error) {
             alert(error.response.data.error);
         }

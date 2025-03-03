@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import './AppointmentCard.css';
 import { Appointment } from '../../Interfaces/Appointment';
-import { Box, Button, Card, CardActions, CardContent, Modal } from '@mui/material';
+import { Button, Card, CardActions, CardContent, Modal } from '@mui/material';
+import { StatusName, StatusRole } from '../../enums/statusAppointments';
+import { useNavigate } from 'react-router-dom';
 
 interface AppointmentCardProps {
   role: string;
@@ -10,23 +12,46 @@ interface AppointmentCardProps {
   onEdit: (id: number, role: string) => void;
 }
 
-
-
 const AppointmentCard: React.FC<AppointmentCardProps> = ({ appointment, onCancel, onEdit, role }) => {
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const dateObj = new Date(appointment.dateTime);
   const utcDate = dateObj.toLocaleDateString('es-ES', { timeZone: 'UTC' });
   const utcTime = dateObj.toLocaleTimeString('es-ES', { timeZone: 'UTC' });
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
-  const onCheck = (id: number) => {
-    console.log(id)
+  const onDisabled = (role: string) => {
+    switch (role) {
+      case StatusRole.Patient:
+        setButtonDisabled(false);
+        break
+      case StatusRole.Doctor:
+        setButtonDisabled(true);
+        break
+      case StatusRole.Admin:
+        setButtonDisabled(false);
+        break
+      default:
+        setButtonDisabled(false);
+        break
+    }
 
+    if (appointment.status === "canceled" || appointment.status === "completed") {
+      setButtonDisabled(true)
+    }
   }
 
-  const onReasign = (id: number) => {
-    console.log(id)
+  useEffect(() => {
+    onDisabled(role)
+  }, [appointment])
+
+  const onCheck = (appointmentId: number) => {
+    console.log(1)
+  }
+
+  const onReasign = (appointmentId: number) => {
+    navigate(`/admin/update/${appointmentId}`);
 
   }
   const handleCancelClick = () => {
@@ -136,18 +161,8 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({ appointment, onCancel
         </Card>
 
       </Modal>
-      {/* {showModal && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <p>¿Estás seguro de que deseas cancelar la cita?</p>
-            <div className="modal-buttons">
-             
-            </div>
-          </div>
-        </div>
-      )} */}
     </>
   );
 };
 
-export default AppointmentCard;
+export default memo(AppointmentCard);

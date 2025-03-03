@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Appointment } from "../Interfaces/Appointment";
 import { getGenericAppointments } from "../services/appointmentsAPI";
 
@@ -7,8 +7,7 @@ const useFetchAppointments = () => {
     const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
-
-    const fetchAppointments = async () => {
+    const fetchAppointments = useCallback( async () => {
         setLoading(true);
         try {
             const data = await getGenericAppointments();
@@ -18,11 +17,11 @@ const useFetchAppointments = () => {
         } finally {
             setLoading(false);
         }
-    };
+    },[]);
 
     useEffect(() => {
         fetchAppointments();
-    }, []);
+    }, [fetchAppointments]);
 
     return { appointments, loading, fetchAppointments }
 }

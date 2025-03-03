@@ -22,11 +22,11 @@ export const createAppointment = async (data: CreateAppointmentPayload): Promise
 };
 
 export const updateAppointment = async (appointmentId: number, date: Date): Promise<Appointment> => {
-    const response = await api.patch<Appointment>(`/appointments/${appointmentId}`, date);
+    const response = await api.patch<Appointment>(`/appointments/${appointmentId}`, { dateTime: date });
     return response.data;
 };
-export const reassignDoctor = async (appointmentId: number, doctorId: number): Promise<Appointment> => {
-    const response = await api.patch<Appointment>(`/appointments/${appointmentId}/reassign`, doctorId);
+export const reassignDoctor = async (appointmentId: number, doctorId: number): Promise<string> => {
+    const response = await api.patch<string>(`/appointments/${appointmentId}/reassign`, { newDoctorId: doctorId });
     return response.data;
 };
 

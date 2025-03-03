@@ -1,52 +1,30 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import Select, { SingleValue } from 'react-select';
-import { getDoctorsBySpecialty } from '../../services/doctorAPI';
 import { GenericOptionsSelect } from '../../Interfaces/GenericOptionsSelect';
 
-
-
 interface DoctorSelectProps {
-    specialty: string;
-    onChange: (option: SingleValue<GenericOptionsSelect>) => void;
+  value: GenericOptionsSelect | null;
+  options: GenericOptionsSelect[];
+  onChange: (option: SingleValue<GenericOptionsSelect>) => void;
 }
 
-const DoctorSelect: React.FC<DoctorSelectProps> = ({ specialty, onChange }) => {
+const DoctorSelect: React.FC<DoctorSelectProps> = ({ value, options, onChange }) => {
+  const handleDoctorChange = useCallback(
+    (selectedOption: SingleValue<GenericOptionsSelect>) => {
+      onChange(selectedOption);
+    },
+    [onChange]
+  );
 
-    const [doctorOptions, setDoctorOptions] = useState<GenericOptionsSelect[]>([]);
-
-    console.log(specialty)
-    useEffect(() => {
-        if (specialty) {
-            getDoctorsBySpecialty(specialty)
-                .then((doctors) => {
-                    const doctorOptions = doctors.map((doc) => ({
-                        value: doc.doctorId,
-                        label: doc.doctorName,
-                    }));
-                    setDoctorOptions(doctorOptions);
-                })
-                .catch((err) => {
-                    console.error('Error al cargar doctores:', err);
-                    setDoctorOptions([]);
-                });
-        } else {
-            setDoctorOptions([]);
-        }
-    }, [specialty]);
-
-    const handleDoctorChange = useCallback((option: SingleValue<GenericOptionsSelect>) => {
-        onChange(option);
-    }, [onChange]);
-
-    return (
-        <Select
-            options={doctorOptions}
-            onChange={handleDoctorChange}
-            placeholder="Seleccione un doctor..."
-            isClearable
-            isDisabled={!specialty}
-        />
-    );
+  return (
+    <Select
+      options={options}
+      value={value}
+      onChange={handleDoctorChange}
+      placeholder="Seleccione un doctor..."
+      isClearable
+    />
+  );
 };
 
 export default DoctorSelect;

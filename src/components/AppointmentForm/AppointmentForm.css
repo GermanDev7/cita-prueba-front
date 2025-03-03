@@ -1,53 +1,25 @@
-
 .appointment-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr; 
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /
+}
+
+.appointment-form__row {
+  display: flex;
+  flex-wrap: wrap; 
   gap: 1rem;
 }
 
-.appointment-form__group {
-  display: flex;
-  flex-direction: column;
-}
-
-.appointment-form__group label {
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.appointment-form__group input {
-  padding: 0.6rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.appointment-form__error {
-  color: #d93025;
-  font-size: 0.85rem;
-  margin-top: 4px;
+.appointment-form__field {
+  flex: 1 1 calc(50% - 1rem);
 }
 
 .appointment-form__buttons {
-  grid-column: 1 / span 2;
   display: flex;
-  justify-content: center;
-  margin-top: 1rem;
+  justify-content: flex-end;
+  gap: 1rem;
 }
 
 .appointment-form__button {
-  padding: 0.8rem 1.2rem;
-  border: none;
-  border-radius: 4px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.appointment-form__button--primary {
-  background-color: #007bff;
-  color: #fff;
-}
-
-.appointment-form__button--primary:hover {
-  background-color: #0056b3;
+  min-width: 120px;
 }

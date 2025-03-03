@@ -13,7 +13,7 @@ import Header from './components/Header/Header';
 function App() {
   return (
     <BrowserRouter>
-      <Header/>
+      <Header />
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route
@@ -28,11 +28,11 @@ function App() {
                   />
                   <Route
                     path="create"
-                    element={<CreateAppointmentPage state='create' />}
+                    element={<CreateAppointmentPage state='create' role="patient" />}
                   />
                   <Route
                     path="update/:id"
-                    element={<CreateAppointmentPage state='update' />}
+                    element={<CreateAppointmentPage state='update' role="patient" />}
                   />
                   <Route path="*" element={<Navigate to="appointments" replace />} />
                 </Routes>
@@ -67,6 +67,10 @@ function App() {
                   <Route
                     path="appointments"
                     element={<AdminAppointmentsPage role="admin" />}
+                  />
+                  <Route
+                    path="update/:id"
+                    element={<CreateAppointmentPage state='update' role="admin" />}
                   />
                   <Route path="*" element={<Navigate to="appointments" replace />} />
                 </Routes>

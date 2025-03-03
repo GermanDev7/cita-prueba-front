@@ -3,11 +3,12 @@ import { getAppointmentById } from "../services/appointmentsAPI";
 import { UseLoadAppointmentDataProps } from "../Interfaces/useLoadAppointmenDataProps";
 import { CreateFormInputs } from "../Interfaces/CreateFormInputs";
 
-const useLoadAppointmentData = ({ state, id, setValue }: UseLoadAppointmentDataProps) => {
+const useLoadAppointmentData = ({ state, id }: UseLoadAppointmentDataProps) => {
     const [appointmentData, setAppointmentData] = useState<CreateFormInputs>({
         appointmentId:0,
-        date: "",
-        time: "",
+        dateTime: new Date(),
+        date:'',
+        time:'',
         appointmentType: "",
         doctorId: 0,
         userId: 0,
@@ -18,9 +19,6 @@ const useLoadAppointmentData = ({ state, id, setValue }: UseLoadAppointmentDataP
             try {
                 const data: CreateFormInputs = await getAppointmentById(Number(id));
                 setAppointmentData(data);
-                setValue('date', data.date);
-                setValue('time', data.time);
-                setValue('appointmentType', data.appointmentType);
             } catch (error) {
                 console.error('Error al cargar la cita:', error);
             }

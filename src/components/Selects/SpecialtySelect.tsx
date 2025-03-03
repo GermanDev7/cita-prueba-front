@@ -2,9 +2,8 @@ import React from 'react';
 import Select, { SingleValue } from 'react-select';
 import { GenericOptionsSelect } from '../../Interfaces/GenericOptionsSelect';
 
-
-
 interface SpecialtySelectProps {
+  value: GenericOptionsSelect | null;
   onChange: (option: SingleValue<GenericOptionsSelect>) => void;
 }
 
@@ -21,12 +20,13 @@ const specialtyOptions: GenericOptionsSelect[] = [
   { value: 'Psiquiatria', label: 'Psiquiatria' },
 ];
 
-const SpecialtySelect: React.FC<SpecialtySelectProps> = ({ onChange }) => {
+const SpecialtySelect: React.FC<SpecialtySelectProps> = ({ value, onChange }) => {
   return (
     <Select
       options={specialtyOptions}
+      value={value}
       onChange={onChange}
-      placeholder="Select a specialty..."
+      placeholder="Seleccione una especialidad..."
       isClearable
     />
   );
