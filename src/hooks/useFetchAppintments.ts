@@ -1,28 +1,30 @@
 import { useEffect, useState } from "react";
 import { Appointment } from "../Interfaces/Appointment";
-import { getPatientAppointments } from "../services/appointmentsAPI";
+import { getGenericAppointments } from "../services/appointmentsAPI";
 
 const useFetchAppointments = () => {
 
     const [appointments, setAppointments] = useState<Appointment[]>([]);
-  
+    const [loading, setLoading] = useState<boolean>(true);
+
 
     const fetchAppointments = async () => {
-
-      
+        setLoading(true);
         try {
-            const data = await getPatientAppointments();
+            const data = await getGenericAppointments();
             setAppointments(data);
         } catch (error) {
             console.error('Error al obtener citas del paciente:', error);
-        } 
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
         fetchAppointments();
     }, []);
 
-    return { appointments, fetchAppointments }
+    return { appointments, loading, fetchAppointments }
 }
 
 

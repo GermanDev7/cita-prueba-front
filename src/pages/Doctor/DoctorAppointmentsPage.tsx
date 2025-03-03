@@ -1,10 +1,14 @@
 import React from 'react';
+import AppointmentList from '../../components/AppointmentList/AppointmentList';
+import './DoctorAppointmentsPage.css';
+import { AppointmentListProps } from '../../Interfaces/AppointmentListProps';
 
-const DoctorAppointmentsPage: React.FC = () => {
+const DoctorAppointmentsPage: React.FC<AppointmentListProps> = ({ role }) => {
+
   return (
-    <div>
-      <h1>Mis Citas (Médico)</h1>
-      <p>Esta es la página para que el médico vea sus citas asignadas.</p>
+    <div className="doctor-page">
+      <h1 className="doctor-page__title">Mis Citas</h1>
+      <AppointmentList role={role} />
     </div>
   );
 };

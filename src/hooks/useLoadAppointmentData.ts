@@ -17,7 +17,6 @@ const useLoadAppointmentData = ({ state, id, setValue }: UseLoadAppointmentDataP
             try {
                 const data: CreateFormInputs = await getAppointmentById(Number(id));
                 setAppointmentData(data);
-                // Poblar los campos del formulario con los datos obtenidos
                 setValue('date', data.date);
                 setValue('time', data.time);
                 setValue('appointmentType', data.appointmentType);

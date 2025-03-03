@@ -1,4 +1,3 @@
-// src/components/Selects/DoctorSelect.tsx
 import React, { useEffect, useState, useCallback } from 'react';
 import Select, { SingleValue } from 'react-select';
 import { getDoctorsBySpecialty } from '../../services/doctorAPI';

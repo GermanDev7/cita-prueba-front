@@ -5,7 +5,7 @@ import api from './api';
 
 
 
-export const getPatientAppointments = async (): Promise<Appointment[]> => {
+export const getGenericAppointments = async (): Promise<Appointment[]> => {
     const response = await api.get<Appointment[]>('/appointments');
     return response.data;
 };

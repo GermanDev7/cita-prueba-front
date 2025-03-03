@@ -14,7 +14,7 @@ import useLoadAppointmentData from '../../hooks/useLoadAppointmentData';
 
 
 
-const AppointmentForm: React.FC<AppointmentFormProps> = ({state }) => {
+const AppointmentForm: React.FC<AppointmentFormProps> = ({ state }) => {
   const { id } = useParams<{ id: string }>();
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<CreateFormInputs>();
 
@@ -42,49 +42,40 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({state }) => {
   }
 
   return (
-    <div className="create-appointment-page">
-      <div className="create-appointment-page__container">
-        <h1 className="create-appointment-page__title">Crear Nueva Cita</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className="create-appointment-page__form">
-          <div className="create-appointment-page__group">
-            <label>Fecha:</label>
-            <input
-              type="date"
-              {...register('date', { required: 'La fecha es obligatoria' })}
-            />
-            {errors.date && <p className="create-appointment-page__error">{errors.date.message}</p>}
-          </div>
-          <div className="create-appointment-page__group">
-            <label>Hora:</label>
-            <input
-              type="time"
-              {...register('time', { required: 'La hora es obligatoria' })}
-            />
-            {errors.time && <p className="create-appointment-page__error">{errors.time.message}</p>}
-          </div>
-
-          {/* Especialidad y Doctor (fila 2) */}
-          <div className="create-appointment-page__group">
-            <label>Especialidad:</label>
-            <SpecialtySelect onChange={handleSpecialtyChange} />
-          </div>
-          <div className="create-appointment-page__group">
-            <label>Doctor:</label>
-            <DoctorSelect
-              specialty={selectedSpecialty ? selectedSpecialty.value : ''}
-              onChange={handleDoctorChange}
-            />
-          </div>
-
-          {/* Botón (fila que abarca ambas columnas) */}
-          <div className="create-appointment-page__buttons">
-            <button type="submit" className="create-appointment-page__button create-appointment-page__button--primary">
-              Crear Cita
-            </button>
-          </div>
-        </form>
+    <form onSubmit={handleSubmit(onSubmit)} className="appointment-form">
+      <div className="appointment-form__group">
+        <label>Fecha:</label>
+        <input
+          type="date"
+          {...register('date', { required: 'La fecha es obligatoria' })}
+        />
+        {errors.date && <p className="appointment-form__error">{errors.date.message}</p>}
       </div>
-    </div>
+      <div className="appointment-form__group">
+        <label>Hora:</label>
+        <input
+          type="time"
+          {...register('time', { required: 'La hora es obligatoria' })}
+        />
+        {errors.time && <p className="appointment-form__error">{errors.time.message}</p>}
+      </div>
+      <div className="appointment-form__group">
+        <label>Especialidad:</label>
+        <SpecialtySelect onChange={handleSpecialtyChange} />
+      </div>
+      <div className="appointment-form__group">
+        <label>Doctor:</label>
+        <DoctorSelect
+          specialty={selectedSpecialty.value || ''}
+          onChange={handleDoctorChange}
+        />
+      </div>
+      <div className="appointment-form__buttons">
+        <button type="submit" className="appointment-form__button appointment-form__button--primary">
+          {state === 'create' ? 'Crear Cita' : 'Actualizar Cita'}
+        </button>
+      </div>
+    </form>
   );
 };
 

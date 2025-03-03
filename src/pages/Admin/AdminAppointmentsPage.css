@@ -1,0 +1,12 @@
+.admin-page {
+    background-color: #f7f9fc;
+    min-height: 100vh;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+.admin-page__title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}

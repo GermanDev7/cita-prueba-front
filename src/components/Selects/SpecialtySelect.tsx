@@ -1,4 +1,3 @@
-// src/components/Selects/SpecialtySelect.tsx
 import React from 'react';
 import Select, { SingleValue } from 'react-select';
 import { GenericOptionsSelect } from '../../Interfaces/GenericOptionsSelect';

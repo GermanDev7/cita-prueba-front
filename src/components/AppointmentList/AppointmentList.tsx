@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo } from 'react';
 import AppointmentCard from '../AppointmentCard/AppointmentCard';
 import './AppointmentList.css';
 import useFetchAppointments from '../../hooks/useFetchAppintments';
@@ -19,12 +19,11 @@ const AppointmentList: React.FC<AppointmentListProps> = ({ role }) => {
     }
   };
 
-  const handleEditAppointment = useCallback((appointmentId: number) => {
-    navigate(`/patient/create/${appointmentId}`);
-  }, [navigate]);
+  const handleEditAppointment = (appointmentId: number) => {
+    navigate(`/patient/update/${appointmentId}`);
+  };
   return (
     <div className="appointment-list">
-      <h2> Mis citas</h2>
       {appointments.map((appt) => (
         <AppointmentCard
           key={appt.appointmentId}

@@ -1,12 +1,13 @@
-// src/App.tsx
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-
 import LoginPage from './pages/LoginPage';
 import DashboardLayout from './components/DashboardLayout/DashboardLayout';
 import PrivateRoute from './routes/PrivateRoute';
-import AppointmentList from './components/AppointmentList/AppointmentList';
-import AppointmentForm from './components/AppointmentForm/AppointmentForm';
+
+import PatientAppointmentsPage from './pages/Patient/PatientAppointmentsPage';
+import CreateAppointmentPage from './pages/Patient/CreateAppointmentPage';
+import DoctorAppointmentsPage from './pages/Doctor/DoctorAppointmentsPage';
+import AdminAppointmentsPage from './pages/Admin/AdminAppointmentsPage';
 
 function App() {
   return (
@@ -21,15 +22,15 @@ function App() {
                 <Routes>
                   <Route
                     path="appointments"
-                    element={<AppointmentList role="patient" />}
+                    element={<PatientAppointmentsPage role='patient' />}
                   />
                   <Route
                     path="create"
-                    element={<AppointmentForm state='create' />}
+                    element={<CreateAppointmentPage state='create' />}
                   />
                   <Route
-                    path="update"
-                    element={<AppointmentForm state='update' />}
+                    path="update/:id"
+                    element={<CreateAppointmentPage state='update' />}
                   />
                   <Route path="*" element={<Navigate to="appointments" replace />} />
                 </Routes>
@@ -46,7 +47,7 @@ function App() {
                 <Routes>
                   <Route
                     path="appointments"
-                    element={<AppointmentList role="doctor" />}
+                    element={<DoctorAppointmentsPage role="doctor" />}
                   />
                   <Route path="*" element={<Navigate to="appointments" replace />} />
                 </Routes>
@@ -63,11 +64,7 @@ function App() {
                 <Routes>
                   <Route
                     path="appointments"
-                    element={<AppointmentList role="admin" />}
-                  />
-                  <Route
-                    path="update"
-                    element={<AppointmentForm state='update' />}
+                    element={<AdminAppointmentsPage role="admin" />}
                   />
                   <Route path="*" element={<Navigate to="appointments" replace />} />
                 </Routes>
