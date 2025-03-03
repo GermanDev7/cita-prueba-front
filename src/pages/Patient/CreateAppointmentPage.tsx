@@ -17,16 +17,15 @@ const CreateAppointmentPage: React.FC = () => {
   
   const getDoctorsBySpecialty = async (specialty: string): Promise<DoctorOption[]> => {
     
-    //return simulatedDoctors;
   };
 
   const handleSpecialtyChange = useCallback(async (option: SingleValue<SpecialtyOption>) => {
     setSelectedSpecialty(option);
     if (option) {
-      // Consulta la API para obtener los doctores de esa especialidad
+     
       const doctors = await getDoctorsBySpecialty(option.value);
       setDoctorOptions(doctors);
-      setSelectedDoctor(null); // Reinicia selección de doctor
+      setSelectedDoctor(null); 
     } else {
       setDoctorOptions([]);
       setSelectedDoctor(null);
