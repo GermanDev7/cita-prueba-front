@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../app/store';
-import { logout } from '../../features/auth/authSlice';
+import { RootState } from '../../store/store';
+import { logout } from '../../store/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 import './Sidebar.css';
 

@@ -1,94 +1,84 @@
-.create-cita {
+.create-appointment-page {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     background-color: #f7f9fc;
-   
-}
-
-.create-cita__container {
+  }
+  
+  .create-appointment-page__container {
     background-color: #ffffff;
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    max-width: 1000px;
+    max-width: 900px;
     width: 100%;
     box-sizing: border-box;
-}
-
-.create-cita__title {
+  }
+  
+  .create-appointment-page__title {
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
     text-align: center;
     color: #333;
-}
-
-
-.create-cita__form {
+  }
+  
+ 
+  .create-appointment-page__form {
     display: grid;
     grid-template-columns: 1fr 1fr; 
-    gap: 1rem; 
+    gap: 1.5rem; 
   }
-.create-cita__row {
-    display: flex;
-    gap: 1rem;
-}
-
-.create-cita__field {
+  
+  
+  .create-appointment-page__group {
     display: flex;
     flex-direction: column;
   }
-
-.create-cita__field label {
-    margin-bottom: 0.5rem;
+  
+  .create-appointment-page__group label {
     font-weight: 600;
-}
-
-.create-cita__field input {
-    padding: 0.8rem;
-    border: 1px solid #ccc;
+    margin-bottom: 0.5rem;
+  }
+  
+ 
+  .create-appointment-page__group input {
+    padding: 0.6rem;
     border-radius: 4px;
-}
-
-.create-cita__error {
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  
+ 
+  .create-appointment-page__error {
     color: #d93025;
     font-size: 0.85rem;
     margin-top: 4px;
-}
-
-.create-cita__buttons {
-    grid-column: 1 / span 2; /* Ocupa ambas columnas */
+  }
+  
+ 
+  .create-appointment-page__buttons {
+    grid-column: 1 / span 2; 
     display: flex;
     justify-content: center;
-    gap: 1rem;
+    margin-top: 1rem;
   }
-
-.create-cita__button {
-    padding: 0.8rem 1.2rem;
+  
+  .create-appointment-page__button {
     border: none;
     border-radius: 4px;
-    cursor: pointer;
+    padding: 0.8rem 1.2rem;
     font-weight: 600;
-}
-
-
-.create-cita__button--primary {
+    cursor: pointer;
+  }
+  
+ 
+  .create-appointment-page__button--primary {
     background-color: #007bff;
     color: #fff;
-}
-
-.create-cita__button--primary:hover {
+  }
+  
+  .create-appointment-page__button--primary:hover {
     background-color: #0056b3;
-}
-
-
-.create-cita__button--secondary {
-    background-color: #fff;
-    color: #007bff;
-    border: 2px solid #007bff;
-}
-
-.create-cita__button--secondary:hover {
-    background-color: #e6f0ff;
-}
+  }
+  

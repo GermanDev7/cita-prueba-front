@@ -1,27 +1,36 @@
-import React, { memo } from 'react';
-import { Appointment } from '../../features/appointments/appointmentTypes';
-import AppointmentCard from '../AppointmentCard/AppointmentCard';
-import './AppointmentList.css';
+// src/components/Selects/SpecialtySelect.tsx
+import React from 'react';
+import Select, { SingleValue } from 'react-select';
+import { GenericOptionsSelect } from '../../Interfaces/GenericOptionsSelect';
 
-interface AppointmentListProps {
-  appointments: Appointment[];
-  onCancel: (id: number) => void;
-  onEdit: (id: number) => void;
+
+
+interface SpecialtySelectProps {
+  onChange: (option: SingleValue<GenericOptionsSelect>) => void;
 }
 
-const AppointmentList: React.FC<AppointmentListProps> = ({ appointments, onCancel, onEdit }) => {
+const specialtyOptions: GenericOptionsSelect[] = [
+  { value: 'Cardiologia', label: 'Cardiologia' },
+  { value: 'Neurologia', label: 'Neurologia' },
+  { value: 'Ortopedica', label: 'Ortopedica' },
+  { value: 'Pediatria', label: 'Pediatria' },
+  { value: 'Dermatologia', label: 'Dermatologia' },
+  { value: 'Oftanmologia', label: 'Oftanmologia' },
+  { value: 'Gastroenterologia', label: 'Gastroenterologia' },
+  { value: 'Endocrinologia', label: 'Endocrinologia' },
+  { value: 'Urologia', label: 'Urologia' },
+  { value: 'Psiquiatria', label: 'Psiquiatria' },
+];
+
+const SpecialtySelect: React.FC<SpecialtySelectProps> = ({ onChange }) => {
   return (
-    <div className="appointment-list">
-      {appointments.map((appt) => (
-        <AppointmentCard 
-          key={appt.appointmentId} 
-          appointment={appt} 
-          onCancel={onCancel}
-          onEdit={onEdit}
-        />
-      ))}
-    </div>
+    <Select
+      options={specialtyOptions}
+      onChange={onChange}
+      placeholder="Select a specialty..."
+      isClearable
+    />
   );
 };
 
-export default memo(AppointmentList);
+export default SpecialtySelect;

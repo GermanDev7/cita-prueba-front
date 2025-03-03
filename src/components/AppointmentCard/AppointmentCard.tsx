@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { Appointment } from '../../features/appointments/appointmentTypes';
+import React, { useEffect, useState } from 'react';
 import './AppointmentCard.css';
+import { Appointment } from '../../Interfaces/Appointment';
+import { StatusAppointment, StatusColor, StatusName } from '../../enums/statusAppointments';
 
 interface AppointmentCardProps {
   appointment: Appointment;
@@ -8,13 +9,17 @@ interface AppointmentCardProps {
   onEdit: (id: number) => void;
 }
 
+
+
 const AppointmentCard: React.FC<AppointmentCardProps> = ({ appointment, onCancel, onEdit }) => {
   const [showModal, setShowModal] = useState(false);
 
   const dateObj = new Date(appointment.dateTime);
   const utcDate = dateObj.toLocaleDateString('es-ES', { timeZone: 'UTC' });
   const utcTime = dateObj.toLocaleTimeString('es-ES', { timeZone: 'UTC' });
-  let buttonsDisabled = false;
+  const [statusName, setStatusName] = useState('');
+  const [statusColor, setStatusColor] = useState('');
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
 
 
@@ -34,22 +39,34 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({ appointment, onCancel
   const closeModal = () => {
     setShowModal(false);
   };
-  let statusName = '';
-  let statusColor = '';
-  if (appointment.status === 'scheduled') {
-    statusColor = 'yellow';
-    statusName = "Programado";
-  } else if (appointment.status === 'canceled') {
-    statusColor = 'red';
-    statusName = "Cancelado";
-    buttonsDisabled = true;
-  } else if (appointment.status === 'completed') {
-    statusColor = 'green';
-    statusName = "Completado";
-    buttonsDisabled = true;
-  } else {
-    statusColor = 'gray';
+
+  const checkColorsByStatus = () => {
+    switch (appointment.status) {
+      case StatusAppointment.Scheduled:
+        setStatusColor(StatusColor.Scheduled);
+        setStatusName(StatusName.Scheduled);
+        break;
+      case StatusAppointment.Canceled:
+        setStatusColor(StatusColor.Canceled);
+        setStatusName(StatusName.Canceled);
+        setButtonDisabled(true);
+        break;
+      case StatusAppointment.Completed:
+        setStatusColor(StatusColor.Completed);
+        setStatusName(StatusName.Completed);
+        setButtonDisabled(true);
+        break;
+      default:
+        setStatusColor(StatusColor.Default);
+        break;
+    }
   }
+
+  useEffect(() => {
+    checkColorsByStatus()
+  }, [])
+
+
 
   return (
     <div className="appointment-card">
@@ -69,14 +86,14 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({ appointment, onCancel
         <button
           className="appointment-card__button appointment-card__button--edit"
           onClick={() => onEdit(appointment.appointmentId)}
-          disabled={buttonsDisabled}
+          disabled={buttonDisabled}
         >
           Editar
         </button>
         <button
           className="appointment-card__button appointment-card__button--cancel"
           onClick={handleCancelClick}
-          disabled={buttonsDisabled}
+          disabled={buttonDisabled}
         >
           Cancelar
         </button>

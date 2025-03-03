@@ -1,13 +1,9 @@
+import { Appointment } from '../Interfaces/Appointment';
+import { CreateAppointmentPayload } from '../Interfaces/CreateAppointmentPayload';
 import api from './api';
-import { Appointment } from '../features/appointments/appointmentTypes';
 
-interface CreateAppointmentPayload {
-    dateTime: Date;
-    appointmentType: string;
-    doctorId: number;
-    userId:number;
 
-}
+
 
 export const getPatientAppointments = async (): Promise<Appointment[]> => {
     const response = await api.get<Appointment[]>('/appointments');

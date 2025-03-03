@@ -1,7 +1,7 @@
 export interface CreateAppointmentPayload {
-    date: string;
-    time: string;
+    dateTime: Date;
     appointmentType: string;
     doctorId: number;
-    patientId: number;  
-  }
+    userId: number;
+    
+}

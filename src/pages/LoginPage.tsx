@@ -1,48 +1,14 @@
 import React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { loginSuccess } from '../features/auth/authSlice';
-import { loginAPI, LoginResponse } from '../services/authAPI';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './LoginPage.css'
+import { useForm } from 'react-hook-form';
 
-interface LoginFormInputs {
-  email: string;
-  password: string;
-}
+import './LoginPage.css'
+import { LoginFormInputs } from '../Interfaces/LoginFormInputs';
+import useLoginSubmit from '../hooks/useLoginSubmit';
 
 const LoginPage: React.FC = () => {
+
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
-    try {
-      const response: LoginResponse = await loginAPI(data);
-      console.log(response)
-      localStorage.setItem('token', response.token);
-      localStorage.setItem('role', response.role || '');
-      localStorage.setItem('userData', JSON.stringify(response.userData));
-      dispatch(loginSuccess(response));
-
-      if (response.role === 'admin') {
-        navigate('/admin/appointments');
-      } else if (response.role === 'doctor') {
-        navigate('/doctor/appointments');
-      } else {
-        navigate('/patient/appointments');
-      }
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        console.error('Error en el login:', error.response?.data || error.message);
-        alert('Error al iniciar sesión. Verifica tus credenciales.');
-      } else {
-        console.error('Error desconocido:', error);
-        alert('Ocurrió un error inesperado.');
-      }
-    }
-  };
+  const { onSubmit } = useLoginSubmit();
 
   return (
     <div className="login-page">
