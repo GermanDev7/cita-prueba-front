@@ -4,6 +4,7 @@ import { RootState } from '../../store/store';
 import { logout } from '../../store/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 import './Sidebar.css';
+import { Divider } from '@mui/material';
 
 const Sidebar: React.FC = () => {
     const dispatch = useDispatch();
@@ -16,11 +17,13 @@ const Sidebar: React.FC = () => {
     };
 
     return (
-        <aside className="sidebar">
+        <section >
+            <h1 className="sidebar__padding">Gestor de citas</h1>
+            <Divider className="sidebar__divider" />
             <ul className="sidebar__list">
                 {role === 'admin' && (
                     <li className="sidebar__item">
-                        <a href="/admin/appointments" className="sidebar__link">Citas</a>
+                        <a href="/admin/appointments" className="sidebar__link">Visualizar citas</a>
                     </li>
                 )}
                 {role === 'doctor' && (
@@ -39,10 +42,11 @@ const Sidebar: React.FC = () => {
                     </>
                 )}
             </ul>
+            <Divider className="sidebar__divider" />
             <button onClick={handleLogout} className="sidebar__logout-button">
                 Cerrar Sesión
             </button>
-        </aside>
+        </section>
     );
 };
 

@@ -1,0 +1,19 @@
+.header__container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 25px;
+    background: #fad7ff;
+  }
+  
+  .drawer__container {
+    width: 70px;
+  }
+  
+  .css-cyqh1t-MuiPaper-root-MuiDrawer-paper {
+    width: 250px;
+    background: #fef7ff;
+  }

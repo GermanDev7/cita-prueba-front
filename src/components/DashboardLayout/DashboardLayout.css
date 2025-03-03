@@ -1,12 +1,10 @@
 .dashboard-layout {
     display: grid;
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 1fr;
     min-height: 100vh;
     background-color: #f4f4f4;
 }
 
 .dashboard-layout__content {
-    background-color: #ffffff;
-    padding: 20px;
     overflow-y: auto;
 }

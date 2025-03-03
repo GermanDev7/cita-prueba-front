@@ -10,6 +10,7 @@ import useSubmitAppointment from '../../hooks/useSubmitAppointment';
 import { AppointmentFormProps } from '../../Interfaces/AppointmentFormProps';
 import { useParams } from 'react-router-dom';
 import useLoadAppointmentData from '../../hooks/useLoadAppointmentData';
+import useUpdateAppointment from '../../hooks/useUpdateAppointment';
 
 
 
@@ -25,6 +26,8 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ state }) => {
 
   const { appointmentData } = useLoadAppointmentData({ state, id, setValue });
   const { submitAppointment } = useSubmitAppointment();
+  const { update } = useUpdateAppointment()
+
 
   const handleSpecialtyChange = useCallback((option: GenericOptionsSelect) => {
     setSelectedSpecialty(option);
@@ -33,11 +36,20 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ state }) => {
 
 
   const handleDoctorChange = useCallback((option: GenericOptionsSelect) => {
+
     setSelectedDoctor(option);
   }, []);
 
   const onSubmit: SubmitHandler<CreateFormInputs> = (data) => {
-    submitAppointment(data, selectedDoctor, selectedSpecialty)
+    if (state == "create") {
+      submitAppointment(data, selectedDoctor, selectedSpecialty)
+
+    } else {
+
+      update(data.appointmentId, data.date, data.time)
+
+    }
+
 
   }
 

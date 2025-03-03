@@ -8,10 +8,12 @@ import PatientAppointmentsPage from './pages/Patient/PatientAppointmentsPage';
 import CreateAppointmentPage from './pages/Patient/CreateAppointmentPage';
 import DoctorAppointmentsPage from './pages/Doctor/DoctorAppointmentsPage';
 import AdminAppointmentsPage from './pages/Admin/AdminAppointmentsPage';
+import Header from './components/Header/Header';
 
 function App() {
   return (
     <BrowserRouter>
+      <Header/>
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './AppointmentCard.css';
 import { Appointment } from '../../Interfaces/Appointment';
-import { StatusAppointment, StatusColor, StatusName } from '../../enums/statusAppointments';
+import { Box, Button, Card, CardActions, CardContent, Modal } from '@mui/material';
 
 interface AppointmentCardProps {
   role: string;
@@ -18,8 +18,6 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({ appointment, onCancel
   const dateObj = new Date(appointment.dateTime);
   const utcDate = dateObj.toLocaleDateString('es-ES', { timeZone: 'UTC' });
   const utcTime = dateObj.toLocaleTimeString('es-ES', { timeZone: 'UTC' });
-  const [statusName, setStatusName] = useState('');
-  const [statusColor, setStatusColor] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const onCheck = (id: number) => {
@@ -50,114 +48,105 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({ appointment, onCancel
 
 
 
-
-  const checkColorsByStatus = () => {
-    switch (appointment.status) {
-      case StatusAppointment.Scheduled:
-        setStatusColor(StatusColor.Scheduled);
-        setStatusName(StatusName.Scheduled);
-        break;
-      case StatusAppointment.Canceled:
-        setStatusColor(StatusColor.Canceled);
-        setStatusName(StatusName.Canceled);
-        setButtonDisabled(true);
-        break;
-      case StatusAppointment.Completed:
-        setStatusColor(StatusColor.Completed);
-        setStatusName(StatusName.Completed);
-        setButtonDisabled(true);
-        break;
-      default:
-        setStatusColor(StatusColor.Default);
-        break;
-    }
-  }
-
-  useEffect(() => {
-    checkColorsByStatus()
-  }, [])
-
-
-
   return (
-    <div className="appointment-card">
-      <div className="appointment-card__info">
-        <p className="appointment-card__date">Fecha: {utcDate} - {utcTime}</p>
-        <p className="appointment-card__doctor">Doctor: {appointment.doctorName}</p>
-        <p className="appointment-card__type">Tipo: {appointment.appointmentType}</p>
-        <p className="appointment-card__patient">Paciente: {appointment.patientName}</p>
-        <p className="appointment-card__status">
-          Estado: {appointment.status}{' '}
-          <span className="status-label" style={{ backgroundColor: statusColor }}>
-            {statusName}
-          </span>
-        </p>
-      </div>
-      <div className="appointment-card__actions">
-        {(role === 'patient') ? (
-          <>
-            <button
-              className="appointment-card__button appointment-card__button--edit"
-              onClick={() => onEdit(appointment.appointmentId, role)}
-              disabled={buttonDisabled}
-            >
-              Editar
-            </button>
-            <button
-              className="appointment-card__button appointment-card__button--cancel"
-              onClick={handleCancelClick}
-              disabled={buttonDisabled}
-            >
-              Cancelar
-            </button>
-          </>
-        ) : role === 'admin' ? (
-          <>
-            <button
-              className="appointment-card__button appointment-card__button--edit"
-              onClick={() => onReasign(appointment.appointmentId)}
-              disabled={buttonDisabled}
-            >
-              Reasignar
-            </button>
-            <button
-              className="appointment-card__button appointment-card__button--cancel"
-              onClick={handleCancelClick}
-              disabled={buttonDisabled}
-            >
-              Cancelar
-            </button>
-          </>
+    <>
+      <Card>
+        <CardContent className='card__container'>
+          <section className='card__container--bottom'>
+            <span>Fecha:</span> {utcDate} - {utcTime}
+            <br />
+            <span>Doctor Asignado:</span>{appointment.doctorName}
+            <br />
+          </section>
+          <section>
+            <span>Tipo de cita: </span> {appointment.appointmentType}
+            <br />
+            <span>Paciente: </span>{appointment.patientName}
+            <br />
+          </section>
+        </CardContent>
+        <CardActions>
+          {(role === 'patient') ? (
+            <>
+              <Button
+                className="appointment-card__button appointment-card__button--cancel"
+                onClick={handleCancelClick}
+                disabled={buttonDisabled}
+              >
+                Cancelar
+              </Button>
+              <Button
+                className="appointment-card__button appointment-card__button--edit"
+                onClick={() => onEdit(appointment.appointmentId, role)}
+                disabled={buttonDisabled}
+              >
+                Actualizar
+              </Button>
 
+            </>
+          ) : role === 'admin' ? (
+            <>
+              <Button
+                className="appointment-card__button appointment-card__button--edit"
+                onClick={() => onReasign(appointment.appointmentId)}
+                disabled={buttonDisabled}
+              >
+                Reasignar
+              </Button>
+              <Button
+                className="appointment-card__button appointment-card__button--cancel"
+                onClick={handleCancelClick}
+                disabled={buttonDisabled}
+              >
+                Cancelar
+              </Button>
+            </>
+          )
+            : role === 'doctor' ? (
+              <Button
+                className="appointment-card__button appointment-card__button--check"
+                onClick={() => onCheck(appointment.appointmentId)}
+                disabled={buttonDisabled}
+              >
+                Completar
+              </Button>
+            ) :
+              (<>
+              </>)}
+        </CardActions>
+      </Card>
 
+      <Modal
+        open={showModal}
+        onClose={() => closeModal()}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Card className="box-modal">
+          <CardContent>
+            <b>Cancelar Cita</b>
+            <br></br>
+            <p className='box__description'>¿Estás seguro de que deseas cancelar la cita de {appointment.doctorName}?</p>
+          </CardContent>
+          <CardActions>
+            <Button onClick={closeModal}>Cancelar</Button>
+            <Button onClick={confirmCancel}>Confirmar</Button>
+          </CardActions>
 
-        )
-          : role === 'doctor' ? (
-            <button
-              className="appointment-card__button appointment-card__button--check"
-              onClick={() => onCheck(appointment.appointmentId)}
-              disabled={buttonDisabled}
-            >
-              Completar
-            </button>
-          ) :
-            (<>
-            </>)}
+        </Card>
 
-      </div>
-
-      {showModal && (
+      </Modal>
+      {/* {showModal && (
         <div className="modal-overlay">
           <div className="modal">
             <p>¿Estás seguro de que deseas cancelar la cita?</p>
             <div className="modal-buttons">
-              <button onClick={confirmCancel}>Sí, cancelar</button>
-              <button onClick={closeModal}>No, mantener</button>
+             
             </div>
           </div>
         </div>
-      )}
-    </div>
+      )} */}
+    </>
   );
 };
 

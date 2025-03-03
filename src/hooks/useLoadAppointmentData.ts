@@ -5,6 +5,7 @@ import { CreateFormInputs } from "../Interfaces/CreateFormInputs";
 
 const useLoadAppointmentData = ({ state, id, setValue }: UseLoadAppointmentDataProps) => {
     const [appointmentData, setAppointmentData] = useState<CreateFormInputs>({
+        appointmentId:0,
         date: "",
         time: "",
         appointmentType: "",

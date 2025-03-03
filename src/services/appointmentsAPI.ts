@@ -21,6 +21,15 @@ export const createAppointment = async (data: CreateAppointmentPayload): Promise
     return response.data;
 };
 
+export const updateAppointment = async (appointmentId: number, date: Date): Promise<Appointment> => {
+    const response = await api.patch<Appointment>(`/appointments/${appointmentId}`, date);
+    return response.data;
+};
+export const reassignDoctor = async (appointmentId: number, doctorId: number): Promise<Appointment> => {
+    const response = await api.patch<Appointment>(`/appointments/${appointmentId}/reassign`, doctorId);
+    return response.data;
+};
+
 export const cancelAppointment = async (appointmentId: number): Promise<void> => {
     await api.patch(`/appointments/${appointmentId}/cancel`);
 };
