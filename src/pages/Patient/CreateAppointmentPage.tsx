@@ -1,43 +1,60 @@
-// src/pages/Patient/CreateAppointmentPage.tsx
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { createAppointment } from '../../services/appointmentsAPI';
+import { CreateFormInputs,DoctorOption } from '../../features/appointments/appointmentTypes';
+import SpecialtySelect, { SpecialtyOption } from '../../components/Selects/SpecialtySelect';
+import Select, { SingleValue } from 'react-select';
 import './CreateAppointmentPage.css';
 
-interface CreateFormInputs {
-  date: string;
-  time: string;
-  appointmentType: string;
-  doctorId: number;
-}
+
+
 
 const CreateAppointmentPage: React.FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<CreateFormInputs>();
+  const [selectedSpecialty, setSelectedSpecialty] = useState<SpecialtyOption | null>(null);
+  const [doctorOptions, setDoctorOptions] = useState<DoctorOption[]>([]);
+  const [selectedDoctor, setSelectedDoctor] = useState<DoctorOption | null>(null);
+  
+  const getDoctorsBySpecialty = async (specialty: string): Promise<DoctorOption[]> => {
+    
+    //return simulatedDoctors;
+  };
+
+  const handleSpecialtyChange = useCallback(async (option: SingleValue<SpecialtyOption>) => {
+    setSelectedSpecialty(option);
+    if (option) {
+      // Consulta la API para obtener los doctores de esa especialidad
+      const doctors = await getDoctorsBySpecialty(option.value);
+      setDoctorOptions(doctors);
+      setSelectedDoctor(null); // Reinicia selección de doctor
+    } else {
+      setDoctorOptions([]);
+      setSelectedDoctor(null);
+    }
+  }, []);
+
 
   const onSubmit: SubmitHandler<CreateFormInputs> = useCallback(async (data) => {
     try {
-      // Combinar fecha y hora
       const dateTime = new Date(`${data.date}T${data.time}:00`);
-      // Obtener userId de localStorage
       const userDataStr = localStorage.getItem('userData');
       const userId = userDataStr ? JSON.parse(userDataStr).userId : null;
       if (!userId) throw new Error('No se encontró el userId en localStorage');
 
       const payload = {
-        dateTime,
+        dateTime: dateTime,
         appointmentType: data.appointmentType,
         doctorId: data.doctorId,
         userId
       };
+
       await createAppointment(payload);
       alert('Cita creada exitosamente');
-      
-     //navigate('/patient/appointments');
     } catch (error) {
       console.error('Error al crear cita:', error);
       alert('Error al crear la cita');
     }
-  }, []);
+  }, [selectedDoctor]);
 
   return (
     <div className="create-appointment-page">
@@ -45,19 +62,13 @@ const CreateAppointmentPage: React.FC = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="create-appointment-page__form">
         <div className="create-appointment-page__group">
           <label>Fecha:</label>
-          <input
-            type="date"
-            {...register('date', { required: 'La fecha es obligatoria' })}
-          />
+          <input type="date" {...register('date', { required: 'La fecha es obligatoria' })} />
           {errors.date && <p className="create-appointment-page__error">{errors.date.message}</p>}
         </div>
 
         <div className="create-appointment-page__group">
           <label>Hora:</label>
-          <input
-            type="time"
-            {...register('time', { required: 'La hora es obligatoria' })}
-          />
+          <input type="time" {...register('time', { required: 'La hora es obligatoria' })} />
           {errors.time && <p className="create-appointment-page__error">{errors.time.message}</p>}
         </div>
 
@@ -73,15 +84,21 @@ const CreateAppointmentPage: React.FC = () => {
         </div>
 
         <div className="create-appointment-page__group">
-          <label>ID del Doctor:</label>
-          <input
-            type="number"
-            {...register('doctorId', { required: 'El doctor es obligatorio' })}
-          />
-          {errors.doctorId && (
-            <p className="create-appointment-page__error">{errors.doctorId.message}</p>
-          )}
+          <label>Especialidad:</label>
+          <SpecialtySelect onChange={handleSpecialtyChange} />
         </div>
+
+        {doctorOptions.length > 0 && (
+          <div className="create-appointment-page__group">
+            <label>Doctor:</label>
+            <Select
+              options={doctorOptions}
+              onChange={handleDoctorChange}
+              placeholder="Seleccione un doctor..."
+              isClearable
+            />
+          </div>
+        )}
 
         <button type="submit" className="create-appointment-page__submit-button">
           Crear Cita

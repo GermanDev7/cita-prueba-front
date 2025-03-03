@@ -1,11 +1,25 @@
 export interface Appointment {
   appointmentId: number;
-  date: string;   
+  dateTime: Date;
+  date: string;
   time: string;
-  appointmentType: string;   
+  appointmentType: string;
   doctorId: number;
   doctorName: string;
   patientId: number;
   patientName: string;
-  status: 'active' | 'cancelled' | 'completed';
+  status: 'scheduled' | 'canceled' | 'completed';
+}
+
+export interface CreateFormInputs {
+  date: string;
+  time: string;
+  appointmentType: string;
+  doctorId: number;
+  userId: number;
+}
+
+export interface DoctorOption {
+  value: number;
+  label: string;
 }

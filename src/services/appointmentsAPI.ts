@@ -3,9 +3,9 @@ import { Appointment } from '../features/appointments/appointmentTypes';
 
 interface CreateAppointmentPayload {
     dateTime: Date;
-    apointmentType: string;
+    appointmentType: string;
     doctorId: number;
-    userId:number
+    userId:number;
 
 }
 

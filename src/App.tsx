@@ -1,10 +1,9 @@
-// App.tsx
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import PatientAppointmentsPage from './pages/Patient/PatientAppointmentsPage';
 import CreateAppointmentPage from './pages/Patient/CreateAppointmentPage';
-import DashboardLayout from './components/DashboardLayout/DashBoardLayout';
+import DashboardLayout from './components/DashboardLayout/DashboardLayout';
 import PrivateRoute from './routes/PrivateRoute';
 
 function App() {
