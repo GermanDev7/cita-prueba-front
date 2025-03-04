@@ -1,6 +1,7 @@
 # React TypeScript Project
 
-Este proyecto es una implementacion de un gestor de citas, este fue construido con react, Material UI, dedux/toolkit, contructor de bundler vite
+Este proyecto es una implementacion de un gestor de citas, este fue construido con react, Material UI, redux/toolkit con refresh, contructor de bundler vite,
+Implementacion de componentes, paginas
 
 
 ## Installation
