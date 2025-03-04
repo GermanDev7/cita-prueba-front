@@ -9,11 +9,17 @@ import CreateAppointmentPage from './pages/Patient/CreateAppointmentPage';
 import DoctorAppointmentsPage from './pages/Doctor/DoctorAppointmentsPage';
 import AdminAppointmentsPage from './pages/Admin/AdminAppointmentsPage';
 import Header from './components/Header/Header';
+import { useSelector } from 'react-redux';
+import { RootState } from './store/store';
 
 function App() {
+  const { token } = useSelector((state: RootState) => state.auth);
   return (
     <BrowserRouter>
-      <Header />
+      {token && (
+        <Header />
+      )}
+
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route

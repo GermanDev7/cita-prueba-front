@@ -43,9 +43,19 @@ const Sidebar: React.FC = () => {
                 )}
             </ul>
             <Divider className="sidebar__divider" />
-            <button onClick={handleLogout} className="sidebar__logout-button">
-                Cerrar Sesión
-            </button>
+            <br />
+            <li className="sidebar__item">
+                <a
+                    href="#!"
+                    className="sidebar__link"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        handleLogout();
+                    }}
+                >
+                    Cerrar sesión
+                </a>
+            </li>
         </section>
     );
 };

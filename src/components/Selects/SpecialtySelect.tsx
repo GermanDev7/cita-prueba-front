@@ -1,6 +1,7 @@
 import React from 'react';
-import Select, { SingleValue } from 'react-select';
+import { SingleValue } from 'react-select';
 import { GenericOptionsSelect } from '../../Interfaces/GenericOptionsSelect';
+import { Select, MenuItem, FormControl, SelectChangeEvent } from '@mui/material';
 
 interface SpecialtySelectProps {
   value: GenericOptionsSelect | null;
@@ -21,14 +22,37 @@ const specialtyOptions: GenericOptionsSelect[] = [
 ];
 
 const SpecialtySelect: React.FC<SpecialtySelectProps> = ({ value, onChange }) => {
+
+  const handleChange = (event: SelectChangeEvent) => {
+    const selectedValue = event.target.value;
+    const selectedOption = specialtyOptions.find(
+      (option) => option.value === selectedValue
+    ) || null;
+
+    onChange(selectedOption);
+  };
+
   return (
-    <Select
-      options={specialtyOptions}
-      value={value}
-      onChange={onChange}
-      placeholder="Seleccione una especialidad..."
-      isClearable
-    />
+    <FormControl fullWidth>
+      <Select
+        labelId="specialty-label"
+        id="specialty-select"
+        label="Especialidad"
+
+        value={value?.value ?? ''}
+        onChange={handleChange}
+        displayEmpty
+      >
+        <MenuItem value="">
+          <em>Seleccione una especialidad...</em>
+        </MenuItem>
+        {specialtyOptions.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 };
 

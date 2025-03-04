@@ -1,21 +1,24 @@
+import { useState } from "react";
 import { CreateAppointmentPayload } from "../Interfaces/CreateAppointmentPayload";
 import { createAppointment } from "../services/appointmentsAPI";
 
 const useSubmitAppointment = () => {
 
+    const [error, setError] = useState("")
+
     const submitAppointment = async (data, selectedDoctor, selectedSpecialty) => {
-       
         try {
             if (!selectedDoctor) {
-                throw new Error('Debes seleccionar un doctor');
+                setError('Debes seleccionar un doctor');
+                return;
             }
-            console.log(data.time)
             const dateTime = new Date(`${data.date}T${data.time}:00`);
             const adjustedDateTime = new Date(dateTime.getTime() - (5 * 60 * 60 * 1000));
             const userDataStr = localStorage.getItem('userData');
             const userId = userDataStr ? JSON.parse(userDataStr).userId : null;
             if (!userId) {
-                throw new Error('No se encontró el userId en localStorage');
+                setError('No se encontró el userId en localStorage');
+                return;
             }
 
 
@@ -25,15 +28,20 @@ const useSubmitAppointment = () => {
                 doctorId: parseInt(selectedDoctor.value),
                 userId,
             };
-            console.log("payload", payload);
 
             await createAppointment(payload);
-            
+
         } catch (error) {
-            alert(error.response.data.error);
+            setError(error.response.data.error);
+
         }
+
     }
-    return { submitAppointment };
+    const resetError = () => {
+        setError("");
+    };
+
+    return { submitAppointment, error, resetError };
 
 }
 

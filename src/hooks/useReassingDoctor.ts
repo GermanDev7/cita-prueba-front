@@ -4,20 +4,17 @@ import { reassignDoctor } from '../services/appointmentsAPI';
 
 export const useReassignDoctor = () => {
     const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
+    const [errorReassign, setErrorReasign] = useState('');
 
     const reassign = async (appointmentId: number, doctorId: number): Promise<void> => {
-        setLoading(true);
-        setError(null);
+
         try {
             await reassignDoctor(appointmentId, doctorId);
         } catch (err) {
-            setError(err.message);
+            setErrorReasign(err.response.data.error);
 
-        } finally {
-            setLoading(false);
         }
     };
 
-    return { reassign, loading, error };
+    return { reassign, loading, errorReassign };
 };
